@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+.speech {border: 1px solid #DDD; width: 400px; padding: 0; margin: 0}
+.speech input {border: 0; width: 350px; display: inline-block; height: 30px;}
+.speech img {float: right; width: 25px }
+
+
+    </style>
+    <!– HTML5 Speech Recognition API –>
+    <script>
+function startDictation() {
+if (window.hasOwnProperty('webkitSpeechRecognition')) {
+var recognition = new webkitSpeechRecognition();
+recognition.continuous = false;
+recognition.interimResults = false;
+recognition.lang = "cs-CZ";
+recognition.start();
+recognition.onresult = function(e) {
+    document.getElementById("search").value = e.results[0][0].transcript;
+    recognition.stop();
+    window.location.href = "https://www.rohlik.cz/hledat/" + e.results[0][0].transcript + "?companyId=1";
+};
+recognition.onerror = function(e) {
+stop();
+}
+}
+}
+</script>
+</head>
+<body>
+<!– Search Form –>
+    <div class="speech">
+        <input type="text" id="search" placeholder="Po kliku na mikrofon rekni 'svíčková na smetaně'"/>
+        <img onclick="startDictation()" src="https://i.imgur.com/hr20uu8.png"/>
+    </div>
+</body>
+</html>
